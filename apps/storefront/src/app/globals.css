@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    --background: #ffffff;
+    --foreground: #111827;
+    --card: #ffffff;
+    --card-foreground: #111827;
+    --popover: #ffffff;
+    --popover-foreground: #111827;
+    --primary: #030213;
+    --primary-foreground: #ffffff;
+    --secondary: #f3f4f6;
+    --secondary-foreground: #111827;
+    --muted: #ececf0;
+    --muted-foreground: #717182;
+    --accent: #e9ebef;
+    --accent-foreground: #111827;
+    --destructive: #d4183d;
+    --destructive-foreground: #ffffff;
+    --border: rgba(0, 0, 0, 0.1);
+    --input: transparent;
+    --input-background: #f3f3f5;
+    --switch-background: #cbced4;
+    --ring: #d1d5db;
+    --radius: 0.625rem;
+
+    --storefront-primary: #f97316;
+
+    /* Order Status Colors */
+    --status-pending-bg: #f3f4f6;
+    --status-pending: #9ca3af;
+    --status-confirmed-bg: #dbeafe;
+    --status-confirmed: #3b82f6;
+    --status-preparing-bg: #fef3c7;
+    --status-preparing: #f59e0b;
+    --status-ready-bg: #d1fae5;
+    --status-ready: #10b981;
+    --status-dispatched-bg: #a7f3d0;
+    --status-dispatched: #059669;
+    --status-delivered-bg: #bbf7d0;
+    --status-delivered: #22c55e;
+    --status-failed-bg: #fee2e2;
+    --status-failed: #ef4444;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900;
+    font-family: var(--font-sans);
+  }
+
+  * {
+    @apply border-border;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #E8E4DD 25%, #F5F3EF 50%, #E8E4DD 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
