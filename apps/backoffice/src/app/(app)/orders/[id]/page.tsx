@@ -51,7 +51,7 @@ function formatPrice(amount: number | null, currency: string | null): string {
   }).format(major);
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 const TRANSFER_STATUS_CONFIG: Record<string, { label: string; color: string }> = {
   awaiting_payment:  { label: "Sin confirmar",       color: "bg-gray-100 text-gray-700" },

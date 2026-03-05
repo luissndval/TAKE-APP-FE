@@ -232,7 +232,7 @@ export default function AppearanceSettingsPage() {
                 {logoUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img 
-                    src={logoUrl.startsWith('http') ? logoUrl : `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}${logoUrl}`} 
+                    src={logoUrl.startsWith('http') ? logoUrl : `${process.env.NEXT_PUBLIC_API_URL ?? ""}${logoUrl}`}
                     alt="Logo preview" 
                     className="w-16 h-16 rounded-full object-cover shadow-sm"
                   />

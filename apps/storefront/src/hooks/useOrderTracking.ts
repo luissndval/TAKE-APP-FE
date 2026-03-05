@@ -51,8 +51,11 @@ export function useOrderTracking(
   useEffect(() => {
     if (!orderId) return;
 
-    const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
-    const wsUrl = API_BASE.replace(/^http/, "ws") + `/ws/orders/${orderId}/track`;
+    const apiBase = process.env.NEXT_PUBLIC_API_URL;
+    const wsBase = apiBase
+      ? apiBase.replace(/^http/, "ws")
+      : `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.host}`;
+    const wsUrl = wsBase + `/ws/orders/${orderId}/track`;
 
     let closed = false;
 

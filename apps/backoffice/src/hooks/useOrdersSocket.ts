@@ -39,7 +39,8 @@ export const useOrdersSocket = () => {
       if (!token || destroyed) return;
 
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      const host = process.env.NEXT_PUBLIC_API_URL?.replace(/^https?:\/\//, '') || 'localhost:8000';
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const host = apiUrl ? apiUrl.replace(/^https?:\/\//, '') : window.location.host;
 
       const socket = new WebSocket(`${protocol}//${host}/api/v1/backoffice/orders/live?token=${token}`);
       socketRef.current = socket;

@@ -58,10 +58,13 @@ function OrderContent() {
   const router = useRouter();
 
   const orderId = params.id as string;
-  const tenant = searchParams.get("tenant");
+  const tenantFromParam = searchParams.get("tenant");
 
   const { clearCart, clearPendingCart, restorePendingCart } = useCartStore();
   const { order, error } = useOrderPolling(orderId);
+
+  // Usar ?tenant= de la URL o, como fallback, el tenant_slug que viene en el order
+  const tenant = tenantFromParam ?? order?.tenant_slug ?? null;
 
   const { data: tenantData } = useQuery({
     queryKey: ["tenant-public", tenant],

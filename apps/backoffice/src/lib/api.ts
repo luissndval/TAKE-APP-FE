@@ -4,7 +4,7 @@ import { createLogger } from "./logger";
 const logger = createLogger("API");
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000",
+  baseURL: process.env.NEXT_PUBLIC_API_URL ?? "",
 });
 
 api.interceptors.request.use((config) => {

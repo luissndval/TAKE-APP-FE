@@ -197,6 +197,7 @@ export interface OrderPublicOut {
   items: OrderItemPublicOut[];
   transfer_data: TransferDataOut | null;
   delivery_job: DeliveryJobPublicOut | null;
+  tenant_slug: string | null;
 }
 
 export interface PaymentPreference {

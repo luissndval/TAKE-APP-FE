@@ -56,7 +56,7 @@ export function ImageUploader({
   };
 
   const fullUrl = value 
-    ? (value.startsWith("http") ? value : `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000"}${value}`)
+    ? (value.startsWith("http") ? value : `${process.env.NEXT_PUBLIC_API_URL ?? ""}${value}`)
     : null;
 
   return (
