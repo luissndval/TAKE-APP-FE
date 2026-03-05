@@ -508,11 +508,7 @@ function PhaseValidating({
                       ? "ring-2 ring-offset-1 bg-white"
                       : "bg-gray-100"
                   }`}
-                  style={
-                    nodeState === "active"
-                      ? { ringColor: primaryColor }
-                      : {}
-                  }
+                  style={nodeState === "active" ? { outlineColor: primaryColor } : undefined}
                 >
                   {nodeState === "completed" ? (
                     <CheckCircle size={14} className="text-white" />

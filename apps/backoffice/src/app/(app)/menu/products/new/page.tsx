@@ -24,7 +24,7 @@ export default function NewProductPage() {
   const onSubmit = async (values: ProductFormValues) => {
     setError(null);
     try {
-      const { data: product } = await api.post('/api/v1/backoffice/menu/products', {
+      await api.post('/api/v1/backoffice/menu/products', {
         name: values.name,
         description: values.description || null,
         price: values.price,
@@ -32,13 +32,6 @@ export default function NewProductPage() {
         is_available: values.is_available,
         category_id: values.category_id,
       });
-
-      for (const variant of values.variants) {
-        await api.post(
-          `/api/v1/backoffice/menu/products/${product.id}/variants`,
-          variant
-        );
-      }
 
       queryClient.invalidateQueries({ queryKey: ['backoffice-menu'] });
       router.push('/menu');
