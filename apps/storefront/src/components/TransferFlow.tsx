@@ -23,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useTenantPath } from "@/hooks/useTenantPath";
 
 // ── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -100,6 +101,7 @@ function PhaseData({
   onDeclared: () => void;
 }) {
   const router = useRouter();
+  const tenantPath = useTenantPath(tenant);
   const [declaring, setDeclaring] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { remaining, minutes, seconds } = useCountdown(paymentStatus.expires_at);
@@ -128,7 +130,7 @@ function PhaseData({
         <Button
           variant="outline"
           className="w-full"
-          onClick={() => router.push(tenant ? `/${tenant}` : "/")}
+          onClick={() => router.push(tenantPath("/"))}
         >
           Volver al menú
         </Button>
@@ -226,7 +228,7 @@ function PhaseData({
       </Button>
 
       <button
-        onClick={() => router.push(tenant ? `/${tenant}/checkout` : "/")}
+        onClick={() => router.push(tenantPath("/checkout"))}
         className="w-full text-center text-sm text-gray-400 hover:text-gray-600 py-2"
       >
         Cambiar método de pago
@@ -456,6 +458,7 @@ function PhaseValidating({
   onGoToVoucher: () => void;
 }) {
   const router = useRouter();
+  const tenantPath = useTenantPath(tenant);
   const [ps, setPs] = useState(initialStatus);
   const [lastRefresh, setLastRefresh] = useState<number>(Date.now());
   const [canRefresh, setCanRefresh] = useState(true);
@@ -596,14 +599,14 @@ function PhaseValidating({
               Subir otro comprobante
             </Button>
             <Button
-              onClick={() => router.push(tenant ? `/${tenant}/checkout` : "/")}
+              onClick={() => router.push(tenantPath("/checkout"))}
               variant="outline"
               className="w-full"
             >
               Cambiar método de pago
             </Button>
             <Button
-              onClick={() => router.push(tenant ? `/${tenant}` : "/")}
+              onClick={() => router.push(tenantPath("/"))}
               variant="outline"
               className="w-full"
             >
