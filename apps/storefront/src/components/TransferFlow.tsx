@@ -23,7 +23,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useTenantPath } from "@/hooks/useTenantPath";
 
 // ── Tipos ────────────────────────────────────────────────────────────────────
 
@@ -101,7 +100,6 @@ function PhaseData({
   onDeclared: () => void;
 }) {
   const router = useRouter();
-  const tenantPath = useTenantPath(tenant);
   const [declaring, setDeclaring] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { remaining, minutes, seconds } = useCountdown(paymentStatus.expires_at);
@@ -130,7 +128,7 @@ function PhaseData({
         <Button
           variant="outline"
           className="w-full"
-          onClick={() => router.push(tenantPath("/"))}
+          onClick={() => router.push(tenant ? `/${tenant}` : "/")}
         >
           Volver al menú
         </Button>
@@ -228,7 +226,7 @@ function PhaseData({
       </Button>
 
       <button
-        onClick={() => router.push(tenantPath("/checkout"))}
+        onClick={() => router.push(tenant ? `/${tenant}/checkout` : "/")}
         className="w-full text-center text-sm text-gray-400 hover:text-gray-600 py-2"
       >
         Cambiar método de pago
@@ -458,7 +456,6 @@ function PhaseValidating({
   onGoToVoucher: () => void;
 }) {
   const router = useRouter();
-  const tenantPath = useTenantPath(tenant);
   const [ps, setPs] = useState(initialStatus);
   const [lastRefresh, setLastRefresh] = useState<number>(Date.now());
   const [canRefresh, setCanRefresh] = useState(true);
@@ -511,7 +508,11 @@ function PhaseValidating({
                       ? "ring-2 ring-offset-1 bg-white"
                       : "bg-gray-100"
                   }`}
-                  style={nodeState === "active" ? { outlineColor: primaryColor } : undefined}
+                  style={
+                    nodeState === "active"
+                      ? { ["--tw-ring-color" as string]: primaryColor }
+                      : {}
+                  }
                 >
                   {nodeState === "completed" ? (
                     <CheckCircle size={14} className="text-white" />
@@ -599,14 +600,14 @@ function PhaseValidating({
               Subir otro comprobante
             </Button>
             <Button
-              onClick={() => router.push(tenantPath("/checkout"))}
+              onClick={() => router.push(tenant ? `/${tenant}/checkout` : "/")}
               variant="outline"
               className="w-full"
             >
               Cambiar método de pago
             </Button>
             <Button
-              onClick={() => router.push(tenantPath("/"))}
+              onClick={() => router.push(tenant ? `/${tenant}` : "/")}
               variant="outline"
               className="w-full"
             >
