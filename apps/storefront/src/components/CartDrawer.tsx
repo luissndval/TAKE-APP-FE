@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCartStore } from "@/store/cart";
+import { useTenantPath } from "@/hooks/useTenantPath";
 
 interface CartDrawerProps {
   tenantSlug: string;
@@ -11,6 +12,7 @@ interface CartDrawerProps {
 
 export function CartDrawer({ tenantSlug, open, onClose }: CartDrawerProps) {
   const { items, updateQuantity, removeItem, total } = useCartStore();
+  const tenantPath = useTenantPath(tenantSlug);
 
   if (!open) return null;
 
@@ -83,7 +85,7 @@ export function CartDrawer({ tenantSlug, open, onClose }: CartDrawerProps) {
               <span>${total().toLocaleString("es-AR")}</span>
             </div>
             <Link
-              href={`/${tenantSlug}/checkout`}
+              href={tenantPath("/checkout")}
               onClick={onClose}
               className="block w-full bg-brand-500 hover:bg-brand-600 text-white font-semibold py-3 rounded-xl text-center transition-colors"
             >

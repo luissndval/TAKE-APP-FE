@@ -7,11 +7,13 @@ import { motion } from "motion/react";
 import { XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart";
+import { useTenantPath } from "@/hooks/useTenantPath";
 
 function FailureContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const tenant = searchParams.get("tenant");
+  const tenantPath = useTenantPath(tenant);
   const mpPaymentId = searchParams.get("payment_id");
 
   const { restorePendingCart } = useCartStore();
@@ -47,14 +49,14 @@ function FailureContent() {
         <div className="flex flex-col gap-3">
           {isRejected && (
             <Button
-              onClick={() => router.push(tenant ? `/${tenant}/checkout` : "/")}
+              onClick={() => router.push(tenantPath("/checkout"))}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold h-12 rounded-xl"
             >
               Reintentar pago
             </Button>
           )}
           <Button variant="outline" className="w-full h-12 rounded-xl" asChild>
-            <Link href={tenant ? `/${tenant}` : "/"}>Volver al menú</Link>
+            <Link href={tenantPath("/")}>Volver al menú</Link>
           </Button>
         </div>
       </div>

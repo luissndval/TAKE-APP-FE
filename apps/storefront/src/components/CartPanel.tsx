@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import { Button } from "@/components/ui/button";
+import { useTenantPath } from "@/hooks/useTenantPath";
 
 interface CartPanelProps {
   tenantSlug: string;
@@ -15,6 +16,7 @@ interface CartPanelProps {
 export function CartPanel({ tenantSlug, onClose, primaryColor = "#f97316" }: CartPanelProps) {
   const router = useRouter();
   const { items, updateQuantity, removeItem, total } = useCartStore();
+  const tenantPath = useTenantPath(tenantSlug);
   const cartTotal = total();
   const [removingId, setRemovingId] = useState<string | null>(null);
 
@@ -28,7 +30,7 @@ export function CartPanel({ tenantSlug, onClose, primaryColor = "#f97316" }: Car
 
   function handleCheckout() {
     onClose();
-    router.push(`/${tenantSlug}/checkout`);
+    router.push(tenantPath("/checkout"));
   }
 
   return (
