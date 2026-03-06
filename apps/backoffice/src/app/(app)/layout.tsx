@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuthStore } from '@/hooks/useAuth';
+import { isPlatformUser } from '@/types/auth';
 import Sidebar from '@/components/layout/Sidebar';
 import Header from '@/components/layout/Header';
 
@@ -22,6 +23,10 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     if (user?.tenant_role === 'kitchen' && !pathname.startsWith('/kitchen')) {
       router.replace('/kitchen');
     }
+    // Platform users (superadmin) belong in /admin, not in tenant pages
+    if (isPlatformUser(user) && !pathname.startsWith('/admin')) {
+      router.replace('/admin/tenants');
+    }
   }, [router, user, pathname]);
 
   const hasToken =
@@ -33,6 +38,11 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   // While kitchen redirect is pending, render nothing
   if (user?.tenant_role === 'kitchen' && !pathname.startsWith('/kitchen')) {
+    return null;
+  }
+
+  // While platform redirect is pending, render nothing
+  if (isPlatformUser(user) && !pathname.startsWith('/admin')) {
     return null;
   }
 

@@ -226,7 +226,7 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {metrics?.orders_by_status.map((s) => (
+              {(metrics?.orders_by_status ?? []).map((s) => (
                 <div
                   key={s.status}
                   className="flex items-center justify-between"
@@ -237,7 +237,7 @@ export default function DashboardPage() {
                   </span>
                 </div>
               ))}
-              {!metrics?.orders_by_status.length && (
+              {!(metrics?.orders_by_status?.length) && (
                 <p className="text-sm text-gray-400">Sin pedidos hoy.</p>
               )}
             </div>
@@ -253,7 +253,7 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <ol className="space-y-3">
-              {metrics?.top_products.map((p, i) => (
+              {(metrics?.top_products ?? []).map((p, i) => (
                 <li
                   key={p.name}
                   className="flex items-center justify-between text-sm"
@@ -269,7 +269,7 @@ export default function DashboardPage() {
                   </span>
                 </li>
               ))}
-              {!metrics?.top_products.length && (
+              {!(metrics?.top_products?.length) && (
                 <p className="text-sm text-gray-400">Sin datos hoy.</p>
               )}
             </ol>
