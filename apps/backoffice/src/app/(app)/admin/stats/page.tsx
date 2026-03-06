@@ -83,7 +83,7 @@ export default function StatsPage() {
                 ) : (
                   <>
                     <p className="text-3xl font-bold text-gray-900">{formatted}</p>
-                    <p className="text-xs text-gray-500 mt-1">{m.sub(data!)}</p>
+                    <p className="text-xs text-gray-500 mt-1">{data ? m.sub(data) : '—'}</p>
                   </>
                 )}
               </CardContent>
