@@ -86,11 +86,6 @@ export default function EditProductPage() {
             image_url: product.image_url ?? '',
             is_available: product.is_available,
             category_id: categoryId ?? '',
-            variants: product.variants.map((v) => ({
-              name: v.name,
-              price_delta: v.price_delta,
-              is_available: v.is_available,
-            })),
           }}
           onSubmit={onSubmit}
         />

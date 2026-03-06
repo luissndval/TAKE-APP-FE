@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { fetchTenantPublic } from "@/lib/api";
 import { Button } from "@/components/ui/button";
+import { useTenantPath } from "@/hooks/useTenantPath";
 import { useOrderPolling } from "@/hooks/useOrderPolling";
 import { useCartStore } from "@/store/cart";
 import { TransferFlow } from "@/components/TransferFlow";
@@ -65,6 +66,7 @@ function OrderContent() {
 
   // Usar ?tenant= de la URL o, como fallback, el tenant_slug que viene en el order
   const tenant = tenantFromParam ?? order?.tenant_slug ?? null;
+  const tenantPath = useTenantPath(tenant);
 
   const { data: tenantData } = useQuery({
     queryKey: ["tenant-public", tenant],
@@ -101,7 +103,7 @@ function OrderContent() {
             No pudimos cargar los datos de tu pedido.
           </p>
           <Button variant="outline" className="w-full" asChild>
-            <Link href={tenant ? `/${tenant}` : "/"}>Volver al menú</Link>
+            <Link href={tenantPath("/")}>Volver al menú</Link>
           </Button>
         </div>
       </div>
@@ -161,7 +163,7 @@ function OrderContent() {
 
   const handleRetry = () => {
     restorePendingCart();
-    router.push(tenant ? `/${tenant}/checkout` : "/");
+    router.push(tenantPath("/checkout"));
   };
 
   return (
@@ -388,7 +390,7 @@ function OrderContent() {
             </Button>
           )}
           <Button variant="outline" className="w-full h-12 rounded-xl" asChild>
-            <Link href={tenant ? `/${tenant}` : "/"}>
+            <Link href={tenantPath("/")}>
               {order.status === "failed" ? "Hacer un nuevo pedido" : "Volver al menú"}
             </Link>
           </Button>

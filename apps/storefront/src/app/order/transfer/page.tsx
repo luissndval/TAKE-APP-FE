@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { 
@@ -26,7 +26,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 
-export default function TransferPage() {
+function TransferPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get("id");
@@ -79,7 +79,7 @@ export default function TransferPage() {
     },
   });
 
-  if (isLoadingOrder || !orderId) {
+  if (isLoadingOrder || !orderId || !order) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500" />
@@ -305,5 +305,17 @@ export default function TransferPage() {
         </div>
       </main>
     </div>
+  );
+}
+
+export default function TransferPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500" />
+      </div>
+    }>
+      <TransferPageContent />
+    </Suspense>
   );
 }
